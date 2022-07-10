@@ -42,6 +42,7 @@ class Book:
             book.authors.append( author.Author( author_data ) )
         return book
 
+# Query to exclude the books id that is already favorited
     @classmethod
     def new_favorite_books(cls, data):
         query = "SELECT * FROM books WHERE books.id NOT IN ( SELECT book_id FROM favorites WHERE author_id = %(id)s)"

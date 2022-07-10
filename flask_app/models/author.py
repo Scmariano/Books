@@ -25,11 +25,13 @@ class Author:
         results = connectToMySQL(cls.schema). query_db(query, data)
         return results
 
+# accessing the favorite table
     @classmethod
     def favorite(cls, data):
         query = "INSERT INTO favorites (author_id, book_id) VALUES (%(author_id)s, %(book_id)s)"
         return connectToMySQL(cls.schema).query_db(query, data)
-    
+
+# Query to exclude the authors id that is already favorited
     @classmethod
     def new_favorite_author(cls, data):
         query = "SELECT * FROM authors WHERE authors.id NOT IN ( SELECT author_id FROM favorites WHERE book_id = %(id)s)"
@@ -38,7 +40,7 @@ class Author:
         for row in results:
             authors.append(cls(row))
         return authors
-
+# Query to LEFT JOIN Many to Many
     @classmethod
     def get_from_books(cls, data):
         query = "SELECT * FROM authors LEFT JOIN favorites ON favorites.author_id = authors.id LEFT JOIN books ON favorites.book_id = books.id WHERE authors.id = %(id)s"

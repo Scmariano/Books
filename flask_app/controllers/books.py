@@ -24,6 +24,7 @@ def show_book(id):
     fave_author = Author.new_favorite_author(data)
     return render_template("book_show.html", book = book_show, fave_author = fave_author)
 
+# a route to process/add the favorite function
 @app.route('/fave/book', methods = ['POST'])
 def fave_book():
     data = {
